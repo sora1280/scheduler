@@ -1,0 +1,57 @@
+<!doctype html>
+<html class="no-js" lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>Scheduler</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+<div id="btn">
+    <input type="time" id="startTime" autocomplete="off">
+    <input type="time" id="finishTime" autocomplete="off">
+    <input type="text" id="planName" autocomplete="off">
+    <input type="submit" id="saveBtn" value="決定">
+</div>
+<table id ="mainTable">
+    <tr>
+        <th>　</th>
+        <td>月</td>
+        <td>火</td>
+        <td>水</td>
+        <td>木</td>
+        <td>金</td>
+        <td>土</td>
+        <td>日</td>
+    </tr>
+    <tr>
+        <td id="monday">
+
+        </td>
+    </tr>
+</table>
+<script src = "main.js"></script>
+
+<!--Jquery Layoutday pluginのインストール-->
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="jquery-calendar.js"></script>
+<link rel="stylesheet" type="text/css" href="YOUR_PATH/jquery-calendar.css">
+</body>
+
+</html>
