@@ -23,27 +23,33 @@
 </head>
 
 <body>
-<div id="btn">
-    <input type="time" id="startTime" autocomplete="off">
-    <input type="time" id="finishTime" autocomplete="off">
-    <input type="text" id="planName" autocomplete="off">
-    <input type="submit" id="saveBtn" value="決定">
-</div>
+<form id="mainForm" name="mainForm">
+    <div id="btn">
+        <select name="dow">
+            <option value="mon">月曜日</option>
+            <option value="tue">火曜日</option>
+            <option value="wed">水曜日</option>
+            <option value="thu">木曜日</option>
+            <option value="fri">金曜日</option>
+            <option value="sat">土曜日</option>
+            <option value="sun">日曜日</option>
+        </select>
+        <input type="text" id="startTime" autocomplete="off">
+        <input type="text" id="endTime" autocomplete="off">
+        <input type="text" id="planName" autocomplete="off">
+        <input type="submit" id="saveBtn" value="決定">
+    </div>
+</form>
 <table id ="mainTable">
     <tr>
         <th>　</th>
-        <td>月</td>
-        <td>火</td>
-        <td>水</td>
-        <td>木</td>
-        <td>金</td>
-        <td>土</td>
-        <td>日</td>
-    </tr>
-    <tr>
-        <td id="monday">
-
-        </td>
+        <td id="monday">月</td>
+        <td id="tuesday">火</td>
+        <td id="wednesday">水</td>
+        <td id="thursday">木</td>
+        <td id="friday">金</td>
+        <td id="saturday">土</td>
+        <td id="sunday">日</td>
     </tr>
 </table>
 <script src = "main.js"></script>
