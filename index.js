@@ -28,7 +28,40 @@ let lectureObj = {
     endTime: '10:45',
 };
 
+// 曜日変換
+let parseIntDOW = (dOW) => {
+    switch (dOW) {
+        case 'Monday':
+            return 1;
+        case 'Tuesday':
+            return 2;
+        case 'Wednesday':
+            return 3;
+        case 'Thursday':
+            return 4;
+        case 'Friday':
+            return 5;
+        case 'Saturday':
+            return 6;
+        case 'Sunday':
+            return 7;
+        default:
+            return 0;
+    }
+}
 
+// 時刻変換
+let parseIntTime = (time) => {
+    const arr = time.split(':');
+    const intArr = [];
+    for (let i = 0; i < arr.length; i++) {
+        intArr[i] = parseInt(arr[i]);
+    }
+    return intArr[0] * 60 + intArr[1];
+}
+
+
+// sample
 let loadSchdule = () => {
     let scheduleList = [];
     scheduleList.push(lectureObj);
