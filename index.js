@@ -4,7 +4,6 @@
 
 // DB関連
 const mysql = require('mysql');
-const { NULL } = require('mysql/lib/protocol/constants/types');
 const jsonConfig = require('./.env/config.json');
 const connection = mysql.createConnection({
     host: jsonConfig.host,
