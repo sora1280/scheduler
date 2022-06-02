@@ -1,7 +1,10 @@
 'use strict'
 
+//SQL定義
+
 // DB関連
 const mysql = require('mysql');
+const { NULL } = require('mysql/lib/protocol/constants/types');
 const jsonConfig = require('./.env/config.json');
 const connection = mysql.createConnection({
     host: jsonConfig.host,
@@ -12,24 +15,32 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
+/*
 connection.query('SELECT * FROM schedule', function (err, results, fields) {
-    if (err) throw new Error('DB接続に問題があります');
+    if (err) throw new Error('DB接続に失敗');
     console.log(results[0]);
-})
-
-connection.end();
+});
+*/
 
 // オブジェクト
 let lectureObj = {
-    id: 0,
-    name: 'sample',
-    dayOfWeek: 'monday',
-    startTime: '9:00',
-    endTime: '10:45',
+    title: "sample",
+    dayOfWeek: 1,
+    startTime: 540,
+    endTime: 645,
+    taskFlg: 0
+};
+
+let lectureObj2 = {
+    title: "sample2",
+    dayOfWeek: 2,
+    startTime: 540,
+    endTime: 645,
+    taskFlg: 1
 };
 
 // 曜日変換
-let parseIntDOW = (dOW) => {
+const parseIntDOW = (dOW) => {
     switch (dOW) {
         case 'Monday':
             return 1;
@@ -48,33 +59,56 @@ let parseIntDOW = (dOW) => {
         default:
             return 0;
     }
-}
+};
 
 // 時刻変換
-let parseIntTime = (time) => {
+const parseIntTime = (time) => {
     const arr = time.split(':');
     const intArr = [];
     for (let i = 0; i < arr.length; i++) {
         intArr[i] = parseInt(arr[i]);
     }
     return intArr[0] * 60 + intArr[1];
-}
+};
 
-
-// sample
-let loadSchdule = () => {
-    let scheduleList = [];
-    scheduleList.push(lectureObj);
-    return scheduleList;
-}
-
-let showSchedule = () => {
-    let arr = loadSchdule();
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i].dayOfWeek === 'monday') {
-            console.log(arr[i].name);
-        }
+// スケジュール入力
+const inputSchedule = (lectureObj) => {
+    const arr = [];
+    for (const key in lectureObj) {
+        arr.push(lectureObj[key]);
     }
+    connection.query('INSERT INTO schedule (title, dayOfWeek, startTime, endTime, taskFlg) VALUES (?, ?, ?, ?, ?)',
+        arr, function (err, response) {
+            if (err) throw err;
+            console.log(response);
+        });
+};
+
+// 全削除
+const deleteTable = () => {
+    connection.query('TRUNCATE TABLE schedule',
+        function (err, response) {
+            if (err) throw err;
+            console.log(response);
+        });
 }
 
-showSchedule();
+
+// スケジュール読み込み
+const loadSchdule = () => {
+    connection.query('SELECT * FROM schedule',
+        function (err, response) {
+            if (err) throw err;
+            console.log(response);
+        });
+};
+
+// sampleRun
+
+deleteTable();
+loadSchdule();
+inputSchedule(lectureObj);
+inputSchedule(lectureObj2)
+loadSchdule();
+
+connection.end();
