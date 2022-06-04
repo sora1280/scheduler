@@ -13,6 +13,14 @@ const putData = (obj) => {
     })
 };
 
+// データ読み込み
+const readAllData = () => {
+    db.schedule.toArray().then(function (schedule) {
+        console.log(schedule);
+        return schedule;
+    })
+};
+
 // データ削除
 const deleteData = (id) => {
     db.schedule.delete(id);
