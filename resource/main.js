@@ -7,12 +7,19 @@ let data = {
     start : [], // 開始時刻
     end : [], //終了時刻
     plan : []  //
-};
+}
 
-let allData =
+//一件分のデータ用配列
+let allData = {
+    dow : [],
+    start : [],
+    end : [],
+    plan : []
+}
 
 // 時間軸の生成
 function timeBar() {
+    console.log(data);
     let time = [];
     for(let i = 5; i < 24; i++) {
         for(let j = 0; j <= 45; j = j + 15) {
@@ -62,9 +69,13 @@ function timeBar() {
 
     //予定の保持
     for(let f = 0; f < data.plan.length; f++) {
-        allData.
+        allData.dow = data.dow[f];
+        allData.start = data.start[f];
+        allData.end = data.end[f];
+        allData.plan = data.plan[f];
         writePlan(allData);
     }
+
     table.rows[1].cells[6].innerHTML = "わーい";
 
 
@@ -72,6 +83,8 @@ function timeBar() {
 
 // 列の取得
 function getDow(dow) {
+    console.log('getDOW');
+    console.log(dow);
     if(dow === "月曜日") {
         return 1;
     } else if(dow === "火曜日") {
@@ -89,36 +102,59 @@ function getDow(dow) {
     }
 }
 
-// 予定
-function plan(dow, startValue, endValue, planValue) {
-    console.log('plan');
-    //時間を時と分に分ける
-    const splitStart = String(startValue).split(":");
+//予定の生成
+function writePlan(allData) {
+    console.log('writePlan')
+    const start = allData.start;
+    const splitStart = String(start).split(":");
     const startHour = splitStart[0];
     const startMinutes = splitStart[1];
 
-    const splitEnd = String(endValue).split(":");
+    const splitEnd = String(allData.end).split(":");
     const endHour = splitEnd[0];
     const endMinutes = splitEnd[1];
 
-    writePlan(dow, startHour, startMinutes, endHour, endMinutes, planValue);
+    let dowNum = getDow(allData.dow);
+    console.log('dowNum:' + dowNum);
 
-}
+    let startHour2 = correspondenceHour(startHour);
+    let startMinutes2 = correspondenceMinutes(startMinutes);
 
-//予定の生成
-function writePlan(dow, startHour, startMinutes, endHour, endMinutes, planValue) {
-    let dowNum = getDow(dow);
-    startHour = correspondenceHour(startHour);
-    startMinutes = correspondenceMinutes(startMinutes);
+    let planNum = startHour2 * 4 + startMinutes2;
+    console.log('planNum:' + planNum);
 
-    let planNum = startHour * 4 + startMinutes;
-
-    table.rows[planNum].cells[dowNum].innerText = String(planValue);
-    table.rows[planNum].cells[1].innerHTML = "わーい";
+    //table.rows[planNum].cells[dowNum].innerText = allData.plan;
+    //table.rows[planNum].cells[1].innerHTML = "わーい";
 }
 
 //時、分のセル位置に対応させるための変更
 function correspondenceHour(hour) {
+    console.log('cHour')
+    // switch(hour) {
+    //     case "00":
+    //         return hour = 0;
+    //     case "01":
+    //         return hour = 1;
+    //     case "02":
+    //         return hour = 2;
+    //     case "03":
+    //         return hour = 3;
+    //     case "04":
+    //         return hour = 4;
+    //     case "05":
+    //         return hour = 5;
+    //     case "06":
+    //         return hour = 6;
+    //     case "07":
+    //         return hour = 7;
+    //     case "08":
+    //         return hour = 8;
+    //     case "09":
+    //         return hour = 9;
+    //     default:
+    //         return hour;
+    // }
+
     if(24 > hour && hour > 4) {
         hour = hour - 5;
     } else {
@@ -129,6 +165,7 @@ function correspondenceHour(hour) {
 }
 
 function correspondenceMinutes(minutes) {
+    console.log('cMinutes');
     switch(minutes) {
         case "00":
             minutes = 0;
@@ -148,37 +185,45 @@ function correspondenceMinutes(minutes) {
 
 // 決定ボタンを押したときの動作
 function save() {
+    console.log('save');
     // 要素の取得
-    const dow = document.getElementsByName("dow");
-    const startTime = document.getElementById("startTime");
-    const endTime = document.getElementById("endTime");
-    const planName = document.getElementById("planName");
+    const startTime = document.getElementById("startTime").value;
+    const endTime = document.getElementById("endTime").value;
+    const planName = document.getElementById("planName").value;
+    const dow1 = document.getElementById("dow");
+    const dow2 = dow1.selectedIndex;
+    const dow = dow1.options[dow2].value;
 
-    const dowValue = dow.value;
-    const startValue = startTime.value;
-    const endValue = endTime.value;
-    const planValue = planName.value;
+    console.log(dow, startTime, endTime,planName);
+    // const dowValue = dow.value;
+    // const startValue = startTime.value;
+    // const endValue = endTime.value;
+    // const planValue = planName.value;
 
-    data.dow = dowValue;
-    data.start = startValue;
-    data.end = endValue;
-    data.plan = planValue;
+    allData.dow = dow;
+    allData.start = startTime;
+    allData.end = endTime;
+    allData.plan = planName;
 
-    console.log(data);
+    allData = data;
+    //ここでデータベースに追加
 
-    plan(data);
+    writePlan(allData);
 
+    return false;
 }
 
 // リロードした時の読み込みなおし
 window.onload = function () {
     timeBar();
-    writePlan()
+    // writePlan(allData);
+    return false;
 }
 
 
 const main = () => {
-
+    timeBar();
+    document.getElementById('mainForm').onsubmit = save;
 }
 
 main();
