@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="../src/jquery-layoutday.js"></script>
+<link rel="stylesheet" type="text/css" href="../src/jquery-layoutday.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="utf-8">
+  <title>Calendar</title>
+<script>
+var layOutDay = function (cal_events){
+  $('#calendar').addEvents(cal_events);
+};
+$( document ).ready(function() {
+    $('#calendar').layOutDay({
+      'calendar_start': 540,
+      'calendar_end': 1260,
+      'time_selector': 'body .time'
+    });
+
+    calendarEvent = {
+                        dateStart: new Date(/* year */ 2017, /* month */ 01,  /* day */ 09, /* hour */ 18, /* minute */ 30, /* senconds */ 10, /* milliseconds */ 10),
+                        dateEnd: new Date(/* year */ 2017, /* month */ 01, /* day */ 09, /* hour */ 19, /* minute */ 30, /* senconds */ 10, /* milliseconds */ 10),
+                        title: "title",
+                        description: "description"
+                    }
+
+    layOutDay([
+        {event: calendarEvent},
+        {event: calendarEvent}
+    ]);
+});
+</script>
+</head>
+<body>
+<div id="calendar"></div>
+<div class="time">
+    <ul>
+        <li>9:00 <span>AM</span></li>
+        <li class="halfhour">9:30</li>
+        <li>10:00 <span>AM</span></li>
+        <li class="halfhour">10:30</li>
+        <li>11:00 <span>AM</span></li>
+        <li class="halfhour">11:30</li>
+        <li>12:00 <span>PM</span></li>
+        <li class="halfhour">12:30</li>
+        <li>1:00 <span>PM</span></li>
+        <li class="halfhour">1:30</li>
+        <li>2:00 <span>PM</span></li>
+        <li class="halfhour">2:30</li>
+        <li>3:00 <span>PM</span></li>
+        <li class="halfhour">3:30</li>
+        <li>4:00 <span>PM</span></li>
+        <li class="halfhour">4:30</li>
+        <li>5:00 <span>PM</span></li>
+        <li class="halfhour">5:30</li>
+        <li>6:00 <span>PM</span></li>
+        <li class="halfhour">6:30</li>
+        <li>7:00 <span>PM</span></li>
+        <li class="halfhour">7:30</li>
+        <li>8:00 <span>PM</span></li>
+        <li class="halfhour">8:30</li>
+        <li>9:00 <span>PM</span></li>
+    </ul>
+</div>
+</body>
+</html>
