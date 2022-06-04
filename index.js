@@ -4,7 +4,6 @@
 
 // DB関連
 const mysql = require('mysql');
-const { NULL } = require('mysql/lib/protocol/constants/types');
 const jsonConfig = require('./.env/config.json');
 const connection = mysql.createConnection({
     host: jsonConfig.host,
@@ -15,14 +14,6 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
-/*
-connection.query('SELECT * FROM schedule', function (err, results, fields) {
-    if (err) throw new Error('DB接続に失敗');
-    console.log(results[0]);
-});
-*/
-
-// オブジェクト
 let lectureObj = {
     title: "sample",
     dayOfWeek: 1,
@@ -91,7 +82,7 @@ const deleteTable = () => {
             if (err) throw err;
             console.log(response);
         });
-}
+};
 
 
 // スケジュール読み込み
