@@ -3,7 +3,7 @@
 //SQL定義
 
 // DB関連
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const { NULL } = require('mysql/lib/protocol/constants/types');
 const jsonConfig = require('./.env/config.json');
 const connection = mysql.createConnection({
